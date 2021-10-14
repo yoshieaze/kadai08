@@ -29,9 +29,13 @@ class QiitaController extends Controller
     //検索
     public function store(Request $request)
         {
-                $tag_id = $request ->input('search');
+            $tag_id = $request ->input('search');
+            if(!empty($tag_id)){
+                $tag_id = $tag_id;
+            } else{
+                $tag_id = "Laravel";
+            }
 
-                if(!empty($tag_id)){
                     $url = "https://qiita.com/api/v2/tags/" . $tag_id . "/items?page=1&per_page=20";
                     $method = "GET";
 
@@ -44,8 +48,8 @@ class QiitaController extends Controller
                     $qiitas = json_decode($qiitas, true);
 
                     return view('qiita.index', ['qiitas' => $qiitas]);
-                }
-
-
         }
-    }
+
+
+}
+
